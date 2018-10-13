@@ -1,4 +1,6 @@
-class NewProject extends React.Component {
+import React from 'react';
+
+export default class NewProject extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,8 +16,9 @@ class NewProject extends React.Component {
       url: "/api/v1/projects",
       type: "POST",
       data: { project: { name, description } },
-      success: response => {
-        console.log("project saved!", response);
+      success: project => {
+        console.log("project saved!", project);
+        this.props.addProject(project)
       }
     });
   }
