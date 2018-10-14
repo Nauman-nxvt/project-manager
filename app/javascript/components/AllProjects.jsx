@@ -1,5 +1,6 @@
 import React from 'react';
-import Project from './Project'
+import Project from './Project';
+import {Route} from 'react-router-dom'
 
 export default class AllProjects extends React.Component {
   constructor(props) {

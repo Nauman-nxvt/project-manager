@@ -19,6 +19,10 @@ class Api::V1::ProjectsController < Api::V1::BaseController
     respond_with project, json: project
   end
 
+  def show
+    respond_with Project.find(params["id"])
+  end
+
   private
 
   def project_params
