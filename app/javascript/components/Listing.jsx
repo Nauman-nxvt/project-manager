@@ -1,6 +1,6 @@
 import React from 'react';
 import NewProject from './NewProject';
-import Project from './Project';
+import Layout from './Layout';
 import {Link} from "react-router-dom";
 
 export default class Listing extends React.Component {
@@ -13,15 +13,15 @@ export default class Listing extends React.Component {
 
 
   componentDidMount() {
-    console.log('Body comp mounted')
+    console.log('Listing comp mounted')
     $.getJSON('/api/v1/projects.json', (projects) => {
       this.setState({projects})
     })
   }
 
   addProject = (project) => {
-    const newState = this.state.projects.concat(project);
-    this.setState({projects: newState});
+    const newProjects = this.state.projects.concat(project);
+    this.setState({projects: newProjects});
   }
 
   handleDelete = (id) => {
@@ -34,22 +34,22 @@ export default class Listing extends React.Component {
     });
   };
 
-  removeProject(id) {
+  removeProject = (id) => {
     const newProjects = this.state.projects.filter((project) => {
       return project.id !== id;
     });
 
     this.setState({projects: newProjects});
-  }
+  };
 
-  updateProjects(project) {
+  updateProjects = (project) => {
     const projects = this.state.projects.filter((i) => {
       return i.id != project.id
     });
     projects.push(project);
 
     this.setState({projects: projects});
-  }
+  };
 
   render() {
     const projects = this.state.projects.map((project) => {
@@ -66,22 +66,29 @@ export default class Listing extends React.Component {
     });
 
     return(
-    <div>
-      <NewProject addProject={this.addProject}/>
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Project Name</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {projects}
-          </tbody>
-        </table>
+    <Layout>
+      <div className="row justify-content-md-center">
+        <div className="col-6">
+          <NewProject addProject={this.addProject}/>
+        </div>
       </div>
-    </div>
+
+      <div className="row justify-content-md-center">
+        <div className="col-6">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Project Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {projects}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </Layout>
     )
   }
 }

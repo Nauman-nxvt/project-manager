@@ -1,1 +1,36 @@
 @import "bootstrap";
+$border-color:  #dee2e6;
+
+#add-project-form {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 20px;
+  height: 250px;
+  justify-content: space-between;
+}
+
+#tasks-container {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+#project-show{
+  margin-top: 20px;
+  padding: 20px;
+}
+
+#task-div {
+  margin-top: 20px;
+}
+
+#tasks-header {
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  margin-top: 20px;
+  h4 {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}

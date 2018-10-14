@@ -20,7 +20,8 @@ class Api::V1::ProjectsController < Api::V1::BaseController
   end
 
   def show
-    respond_with Project.find(params["id"])
+    project = Project.find(params["id"])
+    respond_with project.as_json.merge({tasks: project.tasks.as_json})
   end
 
   private

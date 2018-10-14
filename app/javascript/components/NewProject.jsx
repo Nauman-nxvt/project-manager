@@ -25,28 +25,45 @@ export default class NewProject extends React.Component {
 
   render() {
     return(
-      <div>
-        <h1>New Project</h1>
+      <div id="add-project-form" className="shadow-lg">
+        <h3 className="text-center">Add a new Project</h3>
 
-        <input
-          type='text' value={this.state.name} name="name"
-          onChange={(e)=>{
-            this.setState({
-              name: e.target.value,
-            });
-          }}
-        />
+        <div className="row justify-content-md-center">
+          <div className="col-3">
+            <label>Name</label>
+          </div>
+          <div className="col-6">
+          <input
+            className="form-control"
+            type='text' value={this.state.name} name="name"
+            onChange={(e)=>{
+              this.setState({
+                name: e.target.value,
+              });
+            }}
+          />
+          </div>
+        </div>
 
-        <input
-          type='text' value={this.state.description} name="description"
-          onChange={(e)=>{
-            this.setState({
-              description: e.target.value,
-            });
-          }}
-        />
-
-        <button onClick={this.handleSubmit}>Submit</button>
+        <div className="row justify-content-md-center">
+          <div className="col-3">
+            <label>Description</label>
+          </div>
+          <div className="col-6">
+            <input
+              className="form-control"
+              type='text' value={this.state.description} name="description"
+              onChange={(e)=>{
+                this.setState({
+                  description: e.target.value,
+                });
+              }}
+            />
+          </div>
+        </div>
+        <div className="mx-auto" style={{width: 200}}>
+          <button className="btn btn-primary" onClick={this.handleSubmit}>Save Project</button>
+        </div>
       </div>
     )
   }
