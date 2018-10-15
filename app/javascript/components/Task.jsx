@@ -20,6 +20,10 @@ export default class Task extends React.Component {
   handleEdit = () => {
     if (this.state.editable) {
       const name = this.state.name;
+      if (name === '') {
+        alert('Please fill all fields.')
+        return;
+      }
       const status = this.state.status;
       const deadline = this.state.deadline.format('D-M-YYYY');
       const id = this.state.task.id;

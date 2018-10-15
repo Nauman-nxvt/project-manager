@@ -19,6 +19,10 @@ export default class NewTask extends React.Component {
   handleSubmit = () => {
     const name = this.state.name;
     const status = this.state.status;
+    if (name === '') {
+      alert('Please fill all fields.')
+      return;
+    }
     const deadline = this.state.deadline.format('D-M-YYYY');
     const project_id = this.props.project_id;
     $.ajax({
@@ -26,8 +30,8 @@ export default class NewTask extends React.Component {
       type: "POST",
       data: { task: { name, status, deadline, project_id } },
       success: task => {
-        console.log("task saved!", task);
-        this.props.addTask(task)
+        this.props.addTask(task);
+        alert("task saved!");
       }
     });
   };

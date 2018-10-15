@@ -12,16 +12,22 @@ export default class NewProject extends React.Component {
   handleSubmit = () => {
     const name = this.state.name;
     const description = this.state.description;
+
+    if (name === '' || description === '') {
+      alert('Please fill all fields.')
+      return;
+    }
+
     $.ajax({
       url: "/api/v1/projects",
       type: "POST",
       data: { project: { name, description } },
       success: project => {
-        console.log("project saved!", project);
-        this.props.addProject(project)
+        this.props.addProject(project);
+        alert("project saved!");
       }
     });
-  }
+  };
 
   render() {
     return(

@@ -30,6 +30,10 @@ export default class Project extends React.Component {
     if(this.state.editable) {
       const name = this.state.name;
       const description = this.state.description;
+      if (name === '' || description === '') {
+        alert('Please fill all fields.')
+        return;
+      }
       const id = this.state.project.id;
       const project = {id, name, description};
       $.ajax({

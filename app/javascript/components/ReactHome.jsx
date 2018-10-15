@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from './Header';
 import Listing from './Listing';
 import Project from "./Project";
 
