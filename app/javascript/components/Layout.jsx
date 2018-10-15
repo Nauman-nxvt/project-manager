@@ -1,19 +1,20 @@
 import React from 'react';
 import Header from './Header';
 
-class Layout extends React.Component{
-  constructor(){
+class Layout extends React.Component {
+  constructor() {
     super();
     this.state = {
       currentUser: null
     }
   }
-  componentDidMount(){
+
+  componentDidMount() {
     $.ajax({
       url: "/auth/check_for_user",
       type: "GET",
       success: response => {
-        if(!!response.json && response.json.email){
+        if (!!response.json && response.json.email) {
           this.setState({
             currentUser: response.json.email
           })
@@ -25,18 +26,18 @@ class Layout extends React.Component{
       }
     });
   }
+
   updateCurrentUser = (val) => {
     this.setState({
       currentUser: val
     })
   };
+
   render() {
     return (
       <div>
         <Header currentUser={this.state.currentUser} updateCurrentUser={this.updateCurrentUser}/>
-        <div className="container">
-          {this.state.currentUser && this.props.children}
-        </div>
+          {this.state.currentUser && <div className="container">{this.props.children}</div>}
       </div>
     );
   }

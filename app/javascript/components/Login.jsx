@@ -1,13 +1,14 @@
 import React from 'react'
 
 export default class Login extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       email: '',
       password: '',
     }
   }
+
   handleLogin = () => {
     $.ajax({
       url: "/users/sign_in.json",
@@ -23,24 +24,46 @@ export default class Login extends React.Component {
         this.props.updateCurrentUser(this.state.email);
       },
       error: response => {
-        let str= ''
-        Object.entries(response.responseJSON).forEach(([k,v])=> str+= `${k} ${v}`  )
-        alert(str)
+        let str = '';
+        Object.entries(response.responseJSON).forEach(([k, v]) => str += `${k} ${v}`);
+        alert(str.toUpperCase())
       }
     });
   };
 
   render() {
     return (
-      <div>
-        <h2>Login</h2>
-          <input placeholder="email" onChange={(e)=>{
-            this.setState({email: e.target.value})
-          }}/>
-          <input type="password" placeholder="password" onChange={(e)=>{
-            this.setState({password: e.target.value})
-          }}/>
-          <button className="btn btn-primary" onClick={this.handleLogin}>Login</button>
+      <div className="container" id="login-form">
+        <div className="row justify-content-md-center">
+          <div className="col-4">
+            <h2 className="main-heading">Login</h2>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-3">
+            <label>Email</label>
+          </div>
+          <div className="col-5">
+            <input placeholder="email" onChange={(e) => {
+              this.setState({email: e.target.value})
+            }}/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-3">
+            <label>Password</label>
+          </div>
+          <div className="col-5">
+            <input type="password" placeholder="password" onChange={(e) => {
+              this.setState({password: e.target.value})
+            }}/>
+          </div>
+        </div>
+        <div className="row justify-content-md-center">
+          <div className="col-4">
+            <button className="btn btn-primary" onClick={this.handleLogin}>Login</button>
+          </div>
+        </div>
       </div>
     );
   };

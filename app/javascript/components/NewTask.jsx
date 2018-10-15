@@ -4,7 +4,6 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import {SingleDatePicker} from 'react-dates';
 
-
 export default class NewTask extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +27,7 @@ export default class NewTask extends React.Component {
     $.ajax({
       url: "/api/v1/tasks",
       type: "POST",
-      data: { task: { name, status, deadline, project_id } },
+      data: {task: {name, status, deadline, project_id}},
       success: task => {
         this.props.addTask(task);
         alert("task saved!");
@@ -37,11 +36,15 @@ export default class NewTask extends React.Component {
   };
 
   render() {
-    return(
-      <div id="add-project-form">
-        <h3 className="text-center">Add a new task</h3>
-
+    return (
+      <div id="add-project-form" className="container shadow-lg">
         <div className="row justify-content-md-center">
+          <div className="col-4">
+            <h2 className="main-heading">Create a new task</h2>
+          </div>
+        </div>
+
+        <div className="row">
           <div className="col-3">
             <label>Name</label>
           </div>
@@ -49,7 +52,7 @@ export default class NewTask extends React.Component {
             <input
               className="form-control"
               type='text' value={this.state.name} name="name"
-              onChange={(e)=>{
+              onChange={(e) => {
                 this.setState({
                   name: e.target.value,
                 });
@@ -58,7 +61,7 @@ export default class NewTask extends React.Component {
           </div>
         </div>
 
-        <div className="row justify-content-md-center">
+        <div className="row">
           <div className="col-3">
             <label>Status</label>
           </div>
@@ -77,7 +80,7 @@ export default class NewTask extends React.Component {
             </select>
           </div>
         </div>
-        <div className="row justify-content-md-center">
+        <div className="row">
           <div className="col-3">
             <label>Deadline</label>
           </div>
@@ -95,9 +98,10 @@ export default class NewTask extends React.Component {
           </div>
         </div>
 
-
-        <div className="mx-auto" style={{width: 200}}>
-          <button className="btn btn-primary" onClick={this.handleSubmit}>Save Task</button>
+        <div className="row justify-content-md-center">
+          <div className="col-2">
+            <button className="btn btn-primary" onClick={this.handleSubmit}>Save Task</button>
+          </div>
         </div>
       </div>
     )

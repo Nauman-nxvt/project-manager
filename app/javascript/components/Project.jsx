@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from "./Layout";
-import Task from "./Task";
 import NewTask from "./NewTask";
+import TaskList from "./TaskList";
 
 export default class Project extends React.Component {
   constructor(props) {
@@ -11,11 +11,11 @@ export default class Project extends React.Component {
       project: {},
       name: '',
       description: '',
+      tasks: []
     }
   }
 
   componentDidMount() {
-    console.log('Project comp mounted')
     $.getJSON(`/api/v1/projects/${this.props.match.params.id}.json`, (project) => {
       this.setState({
         project,
@@ -75,15 +75,10 @@ export default class Project extends React.Component {
 
   render() {
     const {project, tasks} = this.state;
-    const tasksList = !!tasks && tasks.map((task) => {
-      return(
-        <div key={task.id}>
-          <Task task={task} deleteTask={this.handleDeleteTask}/>
-        </div>
-      )});
+
     const name = this.state.editable ?
       <input type='text' value={this.state.name} onChange={(e)=>{this.setState({name: e.target.value})}} />
-      : <h3>{project.name}</h3>;
+      : <h5>{project.name}</h5>;
     const description = this.state.editable ?
       <input type='text' value={this.state.description} onChange={(e)=>{this.setState({description: e.target.value})}}/>
       : <p>{project.description}</p>;
@@ -91,10 +86,31 @@ export default class Project extends React.Component {
     return (
       <Layout>
         <div className="container shadow-lg" id="project-show">
-          <div className="row">
-            <div className="col-4">{name}</div>
-            <div className="col-4">{description}</div>
+          <div className="row justify-content-md-center">
             <div className="col-4">
+              <h2 className="main-heading">Project details</h2>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-3">
+              <label>Project Name</label>
+            </div>
+            <div className="col-5">
+              {name}
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-3">
+              <label>Project Description</label>
+            </div>
+            <div className="col-5">
+              {description}
+            </div>
+          </div>
+
+          <div className="row justify-content-md-center">
+            <div className="col-2">
               <button className="btn btn-primary" onClick={this.handleEdit}>
                 {this.state.editable ? "Submit" : "Edit"}
               </button>
@@ -102,20 +118,11 @@ export default class Project extends React.Component {
           </div>
         </div>
 
-        <div id="task-add" className="container shadow-lg">
-          <NewTask project_id={project.id} addTask={this.addTask}/>
-        </div>
+        <NewTask project_id={project.id} addTask={this.addTask}/>
 
-        <div id="tasks-container" className="container shadow-lg">
-          <h3>Project tasks</h3>
-          <div className="row" id="tasks-header">
-            <div className="col-3" ><h4>Name</h4></div>
-            <div className="col-3"><h4>Status</h4></div>
-            <div className="col-3"><h4>Deadline</h4></div>
-            <div className="col-3"><h4>Actions</h4></div>
-          </div>
-              {tasksList}
-        </div>
+        {
+          !!tasks.length && <TaskList tasks={tasks} handleDeleteTask={this.handleDeleteTask}/>
+        }
       </Layout>
     );
   }

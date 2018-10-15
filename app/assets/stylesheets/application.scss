@@ -1,18 +1,30 @@
 @import "bootstrap";
 $border-color:  #dee2e6;
 
-#add-project-form {
-  display: flex;
-  flex-direction: column;
+h2, h3, h4, h5 {
   margin: 20px;
+}
+
+.main-heading {
+  color: #007a87;
+}
+
+#add-project-form {
+  //display: flex;
+  //flex-direction: column;
+  margin-top: 20px;
   padding: 20px;
-  height: 250px;
-  justify-content: space-between;
+  //height: 250px;
+  //justify-content: space-between;
 }
 
 #tasks-container {
   margin-top: 20px;
   padding: 20px;
+}
+
+#projects-list-container {
+  margin-top: 20px;
 }
 
 #project-show{
@@ -37,4 +49,26 @@ $border-color:  #dee2e6;
 
 .navbar-right li{
   margin-right: 5px;
+}
+
+#login-form, #signup-form {
+  margin-top: 20px;
+  label, button {
+    margin: 10px;
+  }
+}
+
+#auth-links-container {
+  padding: 20px;
+  margin-top: 50px;
+}
+
+.container {
+  background-color: #DFE3E6;
+  padding: 20px;
+}
+
+.btn {
+  margin-right: 2px;
+  margin-left: 2px;
 }

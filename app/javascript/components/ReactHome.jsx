@@ -16,12 +16,7 @@ export default class ReactHome extends React.Component {
         <Switch>
           <Route exact path="/" component={Listing}/>
           <Route path="/projects/:id" component={Project}/>
-          {/*<Redirect from="/" to="/projects"/>*/}
-          {/*<Redirect to="/projects"/>*/}
         </Switch>
-        {/*<div>*/}
-          {/*<Route exact path='/' component={Main} />*/}
-        {/*</div>*/}
       </Router>
       </div>
     );

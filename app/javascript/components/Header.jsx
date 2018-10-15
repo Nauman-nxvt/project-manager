@@ -7,7 +7,7 @@ import Logout from "./Logout"
 class Header extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       page: "login",
       currentUser: null,
     }
@@ -23,7 +23,7 @@ class Header extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.currentUser !== prevProps.currentUser) {
-      this.setState({currentUser: this.props.currentUser}, ()=>{
+      this.setState({currentUser: this.props.currentUser}, () => {
         this.setPage();
       });
     }
@@ -42,7 +42,8 @@ class Header extends React.Component {
           return <Signup changePage={this.changePage} updateCurrentUser={this.props.updateCurrentUser}/>
         case "login":
           return <Login changePage={this.changePage} updateCurrentUser={this.props.updateCurrentUser}/>
-        default: return null;
+        default:
+          return null;
       }
     };
     return (
@@ -57,13 +58,14 @@ class Header extends React.Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <Link className="nav-link" to={'/'}>Home</Link>
+                <Link className="nav-link" to={'/'}>Projects</Link>
               </li>
             </ul>
 
             <ul className="nav navbar-nav navbar-right">
               {
-                this.state.currentUser && <li><Logout changePage={this.changePage} updateCurrentUser={this.props.updateCurrentUser}/></li>
+                this.state.currentUser &&
+                <li><Logout changePage={this.changePage} updateCurrentUser={this.props.updateCurrentUser}/></li>
               }
               {
                 !this.state.currentUser &&
@@ -81,12 +83,7 @@ class Header extends React.Component {
           </div>
         </nav>
         {
-          !this.state.currentUser &&
-          <div className="row justify-content-md-center">
-            <div className="col-6 shadow-lg" style={{padding: 20, marginTop: 50}}>
-              {<AuthLinks/>}
-            </div>
-          </div>
+          !this.state.currentUser && <AuthLinks/>
         }
       </div>
     );

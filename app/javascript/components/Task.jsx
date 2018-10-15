@@ -47,7 +47,7 @@ export default class Task extends React.Component {
   };
 
   getStatus = (status) => {
-    switch(status) {
+    switch (status) {
       case 'pending':
         return 'Pending';
       case 'in_progress':
@@ -63,20 +63,20 @@ export default class Task extends React.Component {
       <input type='text' value={this.state.name} onChange={(e) => {
         this.setState({name: e.target.value})
       }}/>
-      : <h5>{task.name}</h5>;
+      : <p>{task.name}</p>;
     const status = this.state.editable ?
-        <select value={this.state.status}
-                className="form-control"
-                onChange={(e) => {
-                  this.setState({
-                    status: e.target.value
-                  })
-                }}
-        >
-          <option value="pending">Pending</option>
-          <option value="in_progress">In progress</option>
-          <option value="done">Done</option>
-        </select>
+      <select value={this.state.status}
+              className="form-control"
+              onChange={(e) => {
+                this.setState({
+                  status: e.target.value
+                })
+              }}
+      >
+        <option value="pending">Pending</option>
+        <option value="in_progress">In progress</option>
+        <option value="done">Done</option>
+      </select>
       : <p>{this.getStatus(task.status)}</p>;
     const deadline = this.state.editable ?
       <SingleDatePicker
@@ -89,11 +89,11 @@ export default class Task extends React.Component {
         id="deadline"
         regular={true}
       />
-      : <h5>{task.deadline}</h5>;
+      : <p>{task.deadline}</p>;
 
     return (
       <div className="row" id="task-div">
-        <div className="col-3 align-middle">{name}</div>
+        <div className="col-3">{name}</div>
         <div className="col-3">{status}</div>
         <div className="col-3">{deadline}</div>
         <div className="col-3">
