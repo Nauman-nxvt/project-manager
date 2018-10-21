@@ -11,7 +11,7 @@ Minimum Requirements
 * Users should be able set a deadline for a task;
 
 
-##Setup:
+## Setup:
 
 1- `bundle install`
 
