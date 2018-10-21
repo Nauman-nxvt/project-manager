@@ -1,6 +1,18 @@
 #tasks_controller.rb
 
 class Api::V1::TasksController < Api::V1::BaseController
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
+  def index
+    project = Project.find(params[:project_id])
+    if project.tasks.present?
+    tasks = project.tasks.offset(params[:offset]).limit(params[:limit]).order(:deadline)
+    else
+      tasks = []
+    end
+    respond_with tasks: tasks.as_json
+  end
+
   def create
     respond_with :api, :v1, Task.create(task_params)
   end
@@ -17,6 +29,10 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def show
     respond_with Task.find(params["id"])
+  end
+
+  def record_not_found
+    respond_with json: {error: 'Tasks not found'}
   end
 
   private

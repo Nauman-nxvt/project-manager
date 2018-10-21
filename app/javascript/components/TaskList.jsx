@@ -1,32 +1,93 @@
-import React from 'react';
-import Task from "./Task";
+import React, {Fragment} from 'react';
+import TaskForm from "./TaskForm";
+import TaskTable from "./TaskTable";
 
 export default class TaskList extends React.Component {
-  render() {
-    const tasks = this.props.tasks;
-    const tasksList = !!tasks && tasks.map((task) => {
-        return(
-          <div key={task.id}>
-            <Task task={task} deleteTask={this.props.handleDeleteTask}/>
-          </div>
-        )});
+    constructor(props) {
+        super(props);
+        this.state = {
+            tasks: [],
+            offset: 0
+        }
+    };
 
-    return(
-      <div id="tasks-container" className="container shadow-lg">
-        <div className="row justify-content-md-center">
-          <div className="col-4">
-            <h2 className="main-heading">Project tasks</h2>
-          </div>
-        </div>
+    componentDidMount() {
+        this.getTasks();
+    };
 
-        <div className="row" id="tasks-header">
-          <div className="col-3" ><h4 className="main-heading">Name</h4></div>
-          <div className="col-3"><h4 className="main-heading">Status</h4></div>
-          <div className="col-3"><h4 className="main-heading">Deadline</h4></div>
-          <div className="col-3"><h4 className="main-heading">Actions</h4></div>
-        </div>
-        {tasksList}
-      </div>
-    )
-  }
+    getTasks = () => {
+        $.ajax({
+            url: '/api/v1/tasks.json',
+            data: {project_id: this.props.projectId},
+            type: 'GET',
+
+            success: data => {
+                this.setState({tasks: data.tasks});
+            },
+
+            error: (xhr, status, err) => {
+                console.error(status, err.toString());
+            }
+        });
+    };
+
+    handleDeleteTask = (id) => {
+        $.ajax({
+            url: `/api/v1/tasks/${id}`,
+            type: 'DELETE',
+            success: () => {
+                this.removeTask(id);
+            }
+        });
+    };
+
+    removeTask = (id) => {
+        const newTasks = this.state.tasks.filter((task) => {
+            return task.id !== id;
+        });
+
+        this.setState({tasks: newTasks});
+        alert("task removed!");
+    };
+
+    addTask = (task) => {
+        const newTasks = this.state.tasks.concat(task);
+        this.setState({tasks: newTasks});
+        alert("task saved!");
+    };
+
+    handlePageClick = (data) => {
+        let selected = data.selected;
+        let offset = Math.ceil(selected * this.props.perPage);
+
+        this.setState({offset}, () => {
+            this.getTasks();
+        });
+    };
+
+    createNewTask = (data) => {
+        $.ajax({
+            url: "/api/v1/tasks",
+            type: "POST",
+            data,
+            success: task => {
+                this.addTask(task);
+            }
+        });
+    }
+
+    render() {
+        const tasks = this.state.tasks;
+        return (
+            <div id="tasks-container" className="container shadow-lg">
+                <div className="row justify-content-md-center">
+                    <div className="col-4">
+                        <h2 className="main-heading">Add task</h2>
+                    </div>
+                </div>
+                <TaskForm project_id={this.props.projectId} handleSubmit={this.createNewTask}/>
+                {!!tasks && !!tasks.length && <TaskTable tasks={tasks} handleDeleteTask={this.handleDeleteTask}/>}
+            </div>
+        )
+    }
 }

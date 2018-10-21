@@ -25,17 +25,17 @@ export default class ProjectList extends React.Component {
         </div>
         <div className="row justify-content-md-center">
           <div className="col-6">
-            <table className="table">
-              <thead>
-              <tr>
-                <th className="main-heading">Project Name</th>
-                <th className="main-heading">Actions</th>
-              </tr>
-              </thead>
-              <tbody>
-              {projects}
-              </tbody>
-            </table>
+              <table className="table">
+                  <thead>
+                  <tr>
+                      <th className="main-heading">Project Name</th>
+                      <th className="main-heading">Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {projects}
+                  </tbody>
+              </table>
           </div>
         </div>
       </div>
